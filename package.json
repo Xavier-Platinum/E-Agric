@@ -1,0 +1,27 @@
+{
+  "name": "e-agric",
+  "version": "1.0.0",
+  "description": "Agric technology ",
+  "main": "app.js",
+  "scripts": {
+    "test": "active"
+  },
+  "keywords": [
+    "Agric",
+    "Node.js",
+    "MongoDb",
+    "Express"
+  ],
+  "author": "Kwis Lawrence Francis, Dasat Tapshak",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
