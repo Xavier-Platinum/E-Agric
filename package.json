@@ -4,7 +4,9 @@
   "description": "Agric technology ",
   "main": "app.js",
   "scripts": {
-    "test": "active"
+    "test": "active",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "Agric",
@@ -15,11 +17,16 @@
   "author": "Kwis Lawrence Francis, Dasat Tapshak",
   "license": "ISC",
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.8"
+    "express-session": "^1.17.1",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
