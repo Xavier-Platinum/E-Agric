@@ -75,11 +75,14 @@ app.set("view engine", "ejs");
 const defaultRoutes = require("./routes/defaultRoutes/defaults.routes");
 // AUTH ROUTES //
 const authRoutes = require("./routes/auth/auth.routes");
+// VENDORS ROUTES
+const vendorRoutes = require("./routes/vendorsRoutes/vendor.routes");
 
 
 // initializing routes
 app.use("/", defaultRoutes);
 app.use("/auth", authRoutes)
+app.use("/vendor", vendorRoutes);
 
 // Error Handling 
 app.use((req, res, next) => {
