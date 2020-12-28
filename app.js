@@ -77,12 +77,16 @@ const defaultRoutes = require("./routes/defaultRoutes/defaults.routes");
 const authRoutes = require("./routes/auth/auth.routes");
 // VENDORS ROUTES
 const vendorRoutes = require("./routes/vendorsRoutes/vendor.routes");
+// ADMIN ROUTES
+const adminRoutes = require("./routes/adminRoutes/admin.routes");
+
 
 
 // initializing routes
 app.use("/", defaultRoutes);
 app.use("/auth", authRoutes)
 app.use("/vendor", vendorRoutes);
+app.use("/admin", adminRoutes);
 
 // Error Handling 
 app.use((req, res, next) => {
