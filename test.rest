@@ -1,0 +1,7 @@
+POST http://localhost:9001/auth/farmer
+
+    name,
+    email,
+    password
+
+# GET http://localhost:9001/auth/farmer
