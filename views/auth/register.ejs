@@ -1,0 +1,29 @@
+<h1 class="text-center">Welcome to the registration page</h1>
+<div class="form-row">
+    <%- include("../partials/messages") %> 
+    <form action="/auth/register" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<%= typeof name != 'undefined' ? name : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="<%= typeof email != 'undefined' ? name : '' %> ">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" value="<%= typeof phone != 'undefined' ? phone : '' %> ">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %> ">
+        </div>
+        <div class="form-group">
+            <label for="cPassword">Confirm Password</label>
+            <input type="password" name="cPassword" id="cPassword" class="form-control" placeholder="Confirm Password" value="<%= typeof cpassword != 'undefined' ? cpassword : '' %> ">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Register" class="btn btn-default">
+        </div>
+    </form>
+</div>

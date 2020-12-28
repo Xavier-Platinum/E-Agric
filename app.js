@@ -10,9 +10,11 @@ const path = require("path");
 const logger = require("morgan")
 const session = require("express-session");
 const ejs = require("ejs");
+const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
+const { globalVariables } = require("./config/config");
 const MONGO_LOCAL = require("./config/db.config").MONGO_URI_LOCAL;
 
 const app = express();
@@ -59,8 +61,10 @@ app.use(session({
 // passport // JWT
 
 // connect flash
+app.use(flash());
 
 // Globla Env
+app.use(globalVariables);
 
 // Setting up template engine
 app.set("views", path.join(__dirname, "views"));
@@ -76,6 +80,18 @@ const authRoutes = require("./routes/auth/auth.routes");
 // initializing routes
 app.use("/", defaultRoutes);
 app.use("/auth", authRoutes)
+
+// Error Handling 
+app.use((req, res, next) => {
+	res.send(`Sorry the page you are looking for cannot be found 
+		or broken URL
+		if you are not redirected to home click <a href="/">here</a>
+	`)
+	console.log(req.originalUrl);
+	// res.redirect("/")
+	return next();
+	// res.redirect("/");
+})
 
 app.listen(PORT, HOSTNAME, () => {
 	console.log(`App running at http://${HOSTNAME}:${PORT}`);

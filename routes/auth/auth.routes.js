@@ -1,12 +1,12 @@
 const router = require("express").Router();
 
-const farmers =  [];
+// const farmers =  [];
 
 // Desturcturing controllers
-const { farmersGet, farmersPost } = require("../../controllers/auth/auth.controllers");
+const { registerGet, farmersRegisterPost } = require("../../controllers/auth/auth.controllers");
 
-router.route("/farmer")
-.get(farmersGet)
-.post(farmersPost);
+router.route("/register")
+.get(registerGet)
+.post(farmersRegisterPost);
 
 module.exports = router;
