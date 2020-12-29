@@ -2,9 +2,9 @@ const bcrypt = require("bcryptjs");
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 
 module.exports = {
-    authRegisterGet: (req, res) => {
+    farmersRegisterGet: (req, res) => {
         const pageTitle = "Register";
-        res.render("auth/register", { pageTitle });
+        res.render("auth/farmersRegister", { pageTitle });
     },
     farmersRegisterPost: async (req, res) => {
         const { name, email, phone, password, cPassword} = req.body;
@@ -27,7 +27,7 @@ module.exports = {
         }
 
         if(errors.length > 0) {
-            res.render("auth/register", {
+            res.render("auth/farmersRegister", {
                 errors,
                 pageTitle: "Register",
                 name, 
@@ -54,7 +54,8 @@ module.exports = {
                     //     cPassword
                     // });
                     console.log("Email already exists");
-                    res.redirect("/auth/register");
+                    res.redirect(`/${originalUrl}`);
+                    console.log(req.originalUrl);
                     req.flash(
                         "success_msg",
                         "Email already exists"

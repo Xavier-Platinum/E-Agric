@@ -79,6 +79,8 @@ const authRoutes = require("./routes/auth/auth.routes");
 const vendorRoutes = require("./routes/vendorsRoutes/vendor.routes");
 // ADMIN ROUTES
 const adminRoutes = require("./routes/adminRoutes/admin.routes");
+// FARMERS ROUTES
+const farmersRoutes = require("./routes/farmersRoutes/farmer.routes");
 
 
 
@@ -87,6 +89,7 @@ app.use("/", defaultRoutes);
 app.use("/auth", authRoutes)
 app.use("/vendor", vendorRoutes);
 app.use("/admin", adminRoutes);
+app.use("/farmer", farmersRoutes);
 
 // Error Handling 
 app.use((req, res, next) => {
