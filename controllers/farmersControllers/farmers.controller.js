@@ -7,12 +7,12 @@ module.exports = {
         res.render("auth/farmersRegister", { pageTitle });
     },
     farmersRegisterPost: async (req, res) => {
-        const { name, email, phone, password, cPassword} = req.body;
+        const { name, email, password, cPassword} = req.body;
         console.log("Got" + req.body + "as response from the form");
         let errors = [];
 
         // checkking for required fields
-        if(!name || !email || !phone || !password || !cPassword) {
+        if(!name || !email || !password || !cPassword) {
             errors.push({ msg: "Please fill in all fields" });
         }
 
@@ -32,7 +32,6 @@ module.exports = {
                 pageTitle: "Register",
                 name, 
                 email,
-                phone,
                 password,
                 cPassword
             })
@@ -64,7 +63,6 @@ module.exports = {
                     const newFarmer = new Farmer({
                         name,
                         email,
-                        phone,
                         password
                     });
                     console.log(newFarmer);
