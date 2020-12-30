@@ -2,8 +2,12 @@ const bcrypt = require("bcryptjs");
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 
 module.exports = {
+    farmersIndex: (req, res) => {
+        const pageTitle = "Farmer";
+        res.render("farmersViews/index", { pageTitle });
+    },
     farmersRegisterGet: (req, res) => {
-        const pageTitle = "Register";
+        const pageTitle = "Farmers Registration";
         res.render("auth/farmersRegister", { pageTitle });
     },
     farmersRegisterPost: async (req, res) => {

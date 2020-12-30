@@ -81,6 +81,8 @@ const vendorRoutes = require("./routes/vendorsRoutes/vendor.routes");
 const adminRoutes = require("./routes/adminRoutes/admin.routes");
 // FARMERS ROUTES
 const farmersRoutes = require("./routes/farmersRoutes/farmer.routes");
+// USERS ROUTES
+const userRoutes = require("./routes/usersRoutes/users.routes");
 
 
 
@@ -90,6 +92,7 @@ app.use("/auth", authRoutes)
 app.use("/vendor", vendorRoutes);
 app.use("/admin", adminRoutes);
 app.use("/farmer", farmersRoutes);
+app.use("/user", userRoutes);
 
 // Error Handling 
 app.use((req, res, next) => {

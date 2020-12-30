@@ -1,16 +1,16 @@
 const bcrypt = require("bcryptjs");
-const { Vendor } = require("../../models/vendorsModels/vendors.model");
+const { User } = require("../../models/usersModels/users.model");
 
 module.exports = {
-    vendorIndex: (req, res) => {
-        const pageTitle = "Vendor";
-        res.render("vendorsViews/index", { pageTitle });
+    userIndex: (req, res) => {
+        const pageTitle = "User";
+        res.render("usersViews/index", { pageTitle });
     },
-    vendorRegistrationGet: (req, res) => {
-        const pageTitle = "Vendor Registration";
-        res.render("auth/vendorsRegister", { pageTitle});
+    userRegistrationGet: (req, res) => {
+        const pageTitle = "Users Registration";
+        res.render("auth/usersRegister", { pageTitle});
     },
-    vendorRegistrationPost: async(req, res) => {
+    userRegistrationPost: async(req, res) => {
         const { name, email, password, cPassword } = req.body;
         console.log(req.body);
         const errors = [];
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         if(errors.length > 0) {
-            res.render("auth/vendorsRegister", {
+            res.render("auth/usersRegister", {
                 errors, 
                 pageTitle: "Register",
                 name, 
@@ -41,9 +41,9 @@ module.exports = {
             })
         } else {
             // validation passed
-            await Vendor.findOne({ email: email })
-            .then( async(vendor) => {
-                if(vendor) {
+            await User.findOne({ email: email })
+            .then( async(user) => {
+                if(user) {
                     // user exists
                                         // errors.push({ msg: "Email is already registered" });
 
@@ -64,30 +64,30 @@ module.exports = {
                         "This Email already exists"
                     )
                 } else {
-                    const newVendor = new Vendor ({
+                    const newUser = new User ({
                         name,
                         email,
                         password
                     })
-                    console.log(newVendor);
+                    console.log(newUser);
                     // req.flash({})
 
                     // Hashing password
                     bcrypt.genSalt(10, async(err, salt) => 
-                        bcrypt.hash(newVendor.password, salt, async(err, hash) => {
+                        bcrypt.hash(newUser.password, salt, async(err, hash) => {
                             if(err) throw err;
                             // set password to hashed
-                            newVendor.password = hash;
-                            // saving vendor
-                            await newVendor.save()
-                            .then((vendor) => {
-                                console.log(`New Vendor Saved successfully ${vendor}`);
+                            newUser.password = hash;
+                            // saving UsernewUser
+                            await newUser.save()
+                            .then((user) => {
+                                console.log(`New User Saved successfully ${user}`);
                                 req.flash(
                                     "success_msg",
-                                    `You can now login ${vendor.email}`
+                                    `You can now login ${user.email}`
                                 )
                                 res.redirect("/auth/login");
-                                console.log(`Logging in vendor ${vendor.email}`);
+                                console.log(`Logging in user ${user.email}`);
                             })
                             .catch(err => console.log(err)); 
                         })

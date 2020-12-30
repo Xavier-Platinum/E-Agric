@@ -1,11 +1,15 @@
 const router = require("express").Router();
 
 // destructuring controllers
-const { farmersRegisterGet, farmersRegisterPost } = require("../../controllers/farmersControllers/farmers.controller");
+const { farmersIndex, farmersRegisterGet, farmersRegisterPost } = require("../../controllers/farmersControllers/farmers.controller");
 
 // router.get("/register", farmersRegisterGet, farmersRegisterPost);
 
-// 
+// home route
+router.get("/", farmersIndex)
+
+
+// registration route
 router.route("/register")
 .get(farmersRegisterGet)
 .post(farmersRegisterPost);
