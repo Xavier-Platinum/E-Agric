@@ -69,20 +69,20 @@ module.exports = {
                     // req.flash({ })
 
                     // Hashing password
-                    bcrypt.genSalt(10, (err, salt) => 
-                        bcrypt.hash(newFarmer.password, salt, (err, hash) => {
+                    bcrypt.genSalt(10, async(err, salt) => 
+                        bcrypt.hash(newFarmer.password, salt, async(err, hash) => {
                             if(err)  throw err;
                             // Set password to hashed
                             newFarmer.password = hash;
                             // Saving farmer
-                            newFarmer.save()
+                            await newFarmer.save()
                             .then((farmer) => {
                                 console.log(`New famer saved successfully ${farmer}`);
                                 req.flash(
                                     "success_msg",
                                     `You can now login ${farmer.email}`
                                 )
-                                res.redirect("/");
+                                res.redirect("/auth/login");
                                 console.log(`You can now login ${farmer.email}`);
                             })
                             .catch(err => console.log(err));

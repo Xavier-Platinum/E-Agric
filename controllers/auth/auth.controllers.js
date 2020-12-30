@@ -91,5 +91,12 @@ module.exports = {
                 }
             })
         }
+    },
+    authLoginGet: (req, res) => {
+        const pageTitle = "Login";
+        res.render("auth/login", { pageTitle });
+    },
+    authLoginPost: (req, res) => {
+
     }
 }
