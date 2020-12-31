@@ -19,6 +19,12 @@ const MONGO_LOCAL = require("./config/db.config").MONGO_URI_LOCAL;
 
 const app = express();
 
+// compression algorithm
+app.use(compression());
+
+// Security middleware
+app.use(helmet());
+
 // configuring database
 mongoose.connect(MONGO_LOCAL, {
 	useCreateIndex: true,
@@ -32,11 +38,6 @@ mongoose.connect(MONGO_LOCAL, {
 	console.log(`Db connection failed ${err}`)
 })
 
-// compression algorithm
-app.use(compression());
-
-// Security middleware
-app.use(helmet());
 
 // configuring morgan
 app.use(logger("combined"));
