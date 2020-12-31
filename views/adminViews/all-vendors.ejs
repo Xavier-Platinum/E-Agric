@@ -321,7 +321,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- DATA TABLE -->
-                                <h3 class="title-5 m-b-35">Unapproved Farmers</h3>
+                                <h3 class="title-5 m-b-35">data table</h3>
                                 <!-- <div class="table-data__tool">
                                     <div class="table-data__tool-left">
                                         <div class="rs-select2--light rs-select2--md">
@@ -376,7 +376,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% farmers.forEach(farmer => { %>
+                                            <% vendors.forEach(vendor => { %>
                                                 <tr class="tr-shadow">
                                                     <td>
                                                         <label class="au-checkbox">
@@ -384,17 +384,17 @@
                                                             <span class="au-checkmark"></span>
                                                         </label>
                                                     </td>
-                                                    <td><%= farmer.name %> </td>
+                                                    <td><%= vendor.name %> </td>
                                                     <td>
-                                                        <span class="block-email"><%= farmer.email %> </span>
+                                                        <span class="block-email"><%= vendor.email %> </span>
                                                     </td>
-                                                    <td class="desc"><%= farmer.role %> </td>
+                                                    <td class="desc"><%= vendor.role %> </td>
                                                     <td>2018-09-27 02:12</td>
                                                     <td>
-                                                        <% if (farmer.approved === "true") { %>
-                                                            <span class="status--process"><%= farmer.approved %> </span>
+                                                        <% if (vendor.approved === "true") { %>
+                                                            <span class="status--process"><%= vendor.approved %> </span>
                                                         <% } else { %>
-                                                            <span class="status--denied"><%= farmer.approved %> </span>
+                                                            <span class="status--denied"><%= vendor.approved %> </span>
                                                         <% } %> 
                                                     </td>
                                                     <td>$679.00</td>
@@ -402,18 +402,18 @@
                                                         <!-- <div class="dropdown">
                                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a href="/admin/deleteInstructor/<%= farmer._id %>" class="dropdown-item">Delete</a>
-                                                                        <a href="/admin/approveInstructor/<%= farmer._id %>" class="dropdown-item">Approve</a>
+                                                                        <a href="/admin/deleteInstructor/<%= vendor._id %>" class="dropdown-item">Delete</a>
+                                                                        <a href="/admin/approveInstructor/<%= vendor._id %>" class="dropdown-item">Approve</a>
                                                                 </div>
                                                         </div> -->
                                                         <div class="table-data-feature">
                                                             <button class="item" data-toggle="tooltip" data-placement="top" title="accept">
-                                                                <a href="/admin/approve/<%= farmer._id %>">
+                                                                <a href="/admin/approve/<%= vendor._id %>">
                                                                     <i class="fas fa-user"></i>
                                                                 </a>
                                                             </button>
                                                             <button class="item" data-toggle="tooltip" data-placement="top" title="delete">
-                                                                <a href="/admin/decline/<%= farmer._id %>">
+                                                                <a href="/admin/decline/<%= vendor._id %>">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </a>
                                                             </button>
@@ -444,135 +444,6 @@
                                 <!-- END DATA TABLE -->
                             </div>
                         </div>
-
-                        <div class="row m-t-35">
-                            <div class="col-md-12">
-                                <!-- DATA TABLE -->
-                                <h3 class="title-5 m-b-35">Approved Farmers</h3>
-                                <!-- <div class="table-data__tool">
-                                    <div class="table-data__tool-left">
-                                        <div class="rs-select2--light rs-select2--md">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">All Properties</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--light rs-select2--sm">
-                                            <select class="js-select2" name="time">
-                                                <option selected="selected">Today</option>
-                                                <option value="">3 Days</option>
-                                                <option value="">1 Week</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <button class="au-btn-filter">
-                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
-                                    </div>
-                                    <div class="table-data__tool-right">
-                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="zmdi zmdi-plus"></i>add item</button>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                            <select class="js-select2" name="type">
-                                                <option selected="selected">Export</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="table-responsive table-responsive-data2">
-                                    <table class="table table-data2">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <th>name</th>
-                                                <th>email</th>
-                                                <th>Role</th>
-                                                <th>date</th>
-                                                <th>status</th>
-                                                <th>price</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% farmersApproved.forEach(farmer => { %>
-                                                <tr class="tr-shadow">
-                                                    <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td><%= farmer.name %> </td>
-                                                    <td>
-                                                        <span class="block-email"><%= farmer.email %> </span>
-                                                    </td>
-                                                    <td class="desc"><%= farmer.role %> </td>
-                                                    <td>2018-09-27 02:12</td>
-                                                    <td>
-                                                        <% if (farmer.approved === "false") { %>
-                                                            <span class="status--denied"><%= farmer.approved %> </span>
-                                                        <% } else { %>
-                                                            <span class="status--process"><%= farmer.approved %> </span>
-                                                        <% } %> 
-                                                    </td>
-                                                    <td>$679.00</td>
-                                                    <td>
-                                                        <!-- <div class="dropdown">
-                                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a href="/admin/deleteInstructor/<%= farmer._id %>" class="dropdown-item">Delete</a>
-                                                                        <a href="/admin/approveInstructor/<%= farmer._id %>" class="dropdown-item">Approve</a>
-                                                                </div>
-                                                        </div> -->
-                                                        <!-- <div class="table-data-feature">
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="accept">
-                                                                <a href="/admin/approve/<%= farmer._id %>">
-                                                                    <i class="fas fa-user"></i>
-                                                                </a>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="delete">
-                                                                <a href="/admin/decline/<%= farmer._id %>">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </a>
-                                                            </button>
-                                                        </div> -->
-                                                    </td>
-                                                    <!-- <td>
-                                                        <div class="table-data-feature">
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                                <i class="zmdi zmdi-mail-send"></i>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                <i class="zmdi zmdi-edit"></i>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                <i class="zmdi zmdi-delete"></i>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                                <i class="zmdi zmdi-more"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td> -->
-                                                </tr>
-                                                <tr class="spacer"></tr>
-                                            <% }) %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- END DATA TABLE -->
-                            </div>
-                        </div>
-
-
                         <div class="row m-t-30">
                             <div class="col-md-12">
                                 <!-- DATA TABLE-->

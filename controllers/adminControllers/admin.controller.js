@@ -1,6 +1,7 @@
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 const { Vendor } = require("../../models/vendorsModels/vendors.model");
 const { User } = require("../../models/usersModels/users.model");
+// const { } = require("../../models/adminModels/")
 
 module.exports = {
     index: (req, res) => {
@@ -9,12 +10,17 @@ module.exports = {
     },
     all_farmersGet: async (req, res) => {
         await Farmer.find({approved: false})
-        .exec((err, farmers) => {
-            if (err) throw err;
-            else {
+        .exec(async(err, farmers) => {
+            await Farmer.find({approved: true})
+            .exec(async(err, farmersApproved) => {
                 let pageTitle = "All Farmers";
-                res.render("adminViews/all-farmers", { pageTitle, farmers });
-            }
+                await res.render("adminViews/all-farmers", { pageTitle, farmers, farmersApproved });
+            })
+            // if (err) throw err;
+            // else {
+            //     let pageTitle = "All Farmers";
+            //     await res.render("adminViews/all-farmers", { pageTitle, farmers });
+            // }
         })
     },
     all_vendorsGet: async(req, res) => {
@@ -29,7 +35,7 @@ module.exports = {
     },
     all_usersGet: async(req, res) => {
         await User.find({})
-        .then((err, users) => {
+        .exec((err, users) => {
             if (err) throw err;
             else {
                 let pageTitle = "All Users";
@@ -59,8 +65,8 @@ module.exports = {
             } else {
                 approve.approved = true
                 await approve.save();
-                console.log(`${approved.id} has been approved successfully`);
-                req.flash("success_msg", `${approved.id} has been approved successfully`)
+                console.log(`${approve.id} has been approved successfully`);
+                req.flash("success_msg", `${approve.id} has been approved successfully`)
                 res.redirect("/admin/all-farmers")
             }
         }).catch((err) => console.log(err))
