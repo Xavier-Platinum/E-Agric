@@ -116,10 +116,15 @@ module.exports = {
             res.render("adminViews/categories", { pageTitle , categories});
         })
     },
-    categoryPost: async(req, res) => {
+    addCategoryGet: (req, res) => {
+        const pageTitle = "Add Category";
+        res.render("adminViews/add-category", { pageTitle })
+    },
+    addCategoryPost: async(req, res) => {
         const { name, typeOfCat } = req.body;
-        if(req.body) {
-            res.render("adminViews/categories", {
+        console.log(req.body);
+        if(!req.body) {
+            res.render("adminViews/add-category", {
                 pageTitle: "Categories",
                 name, 
                 typeOfCat
@@ -133,7 +138,7 @@ module.exports = {
                         "error",
                         `${category.name} already exists try another please`
                     )
-                    res.redirect("/admin/category");
+                    res.redirect("/admin/add-category");
                 } else {
                     const newCategory = new Category({
                         name,
@@ -152,6 +157,7 @@ module.exports = {
                     .catch((err) => console.log(err));
                 }
             })
+            .catch((err) => console.log(err));
         }
     }
 }

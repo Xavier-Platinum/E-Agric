@@ -40,7 +40,8 @@ mongoose.connect(MONGO_LOCAL, {
 
 
 // configuring morgan
-app.use(logger("combined"));
+// app.use(logger("combined"));
+app.use(logger("dev"));
 
 // configuring express
 app.use(express.json());
