@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Destructuring Routes
-const { index, all_farmersGet, approve, decline, all_vendorsGet, all_usersGet } = require("../../controllers/adminControllers/admin.controller");
+const { index, all_farmersGet, approve, decline, all_vendorsGet, all_usersGet, categoryGet, categoryPost } = require("../../controllers/adminControllers/admin.controller");
 
 // home route
 router.get("/",index);
@@ -20,5 +20,10 @@ router.get("/approve/:_id", approve);
 
 // decline farmer
 router.get("/decline/:_id", decline);
+
+// categories routes
+router.route("/category")
+.get(categoryGet)
+.post(categoryPost);
 
 module.exports = router;

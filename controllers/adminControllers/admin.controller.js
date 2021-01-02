@@ -4,9 +4,17 @@ const { User } = require("../../models/usersModels/users.model");
 // const { } = require("../../models/adminModels/")
 
 module.exports = {
-    index: (req, res) => {
-        const pageTitle = "Admin"
-        res.render("adminViews/admin", { pageTitle });
+    index: async(req, res) => {
+        await Farmer.countDocuments( async(err, totalFarmers) => {
+            await Vendor.countDocuments(async(err, totalVendors) => {
+                await User.countDocuments(async(err, totalUsers) => {
+                    const pageTitle = "Admin";
+                    res.render("adminViews/admin", { pageTitle, totalFarmers, totalVendors, totalUsers})
+                })
+            })
+        })
+        // const pageTitle = "Admin"
+        // res.render("adminViews/admin", { pageTitle });
     },
     all_farmersGet: async (req, res) => {
         await Farmer.find({approved: false})
@@ -25,12 +33,17 @@ module.exports = {
     },
     all_vendorsGet: async(req, res) => {
         await Vendor.find({ approved: false })
-        .exec((err, vendors) => {
-            if (err) throw err;
-            else {
-                let pageTitle = "All Vendors"
-                res.render("adminViews/all-vendors", { pageTitle, vendors });
-            }
+        .exec( async(err, vendors) => {
+            await Vendor.find({ approved: true })
+            .exec(async (err, vendorsApproved) => {
+                let pageTitle = "All Vendors";
+                await res.render("adminViews/all-vendors", { pageTitle, vendors, vendorsApproved});
+            })
+            // if (err) throw err;
+            // else {
+                // let pageTitle = "All Vendors"
+            //     // res.render("adminViews/all-vendors", { pageTitle, vendors });
+            // }
         })
     },
     all_usersGet: async(req, res) => {
@@ -49,7 +62,7 @@ module.exports = {
         await Farmer.findOne({_id})
         .then(async(approve) => {
             if(!approve) {
-                await Vendor.find({_id})
+                await Vendor.findOne({_id})
                 .then(async(approve) => {
                     if(!approve) {
                         return done(null, false, req.flash("error", `Could not approve user ${approve.id}`))
@@ -57,8 +70,8 @@ module.exports = {
                     else {
                         approve.approved = true;
                         await approve.save();
-                        console.log(`${approved.id} has been approved successfully`);
-                        req.flash("success_msg", `${approved.id} has been approved successfully`)
+                        console.log(`${approve.id} has been approved successfully`);
+                        req.flash("success_msg", `${approve.id} has been approved successfully`)
                         res.redirect("/admin/all-vendors")
                     }
                 }).catch((err) => console.log(err));
@@ -81,17 +94,24 @@ module.exports = {
                     if(!declined) {
                         return done(null, false, req.flash("error", `Could Not Decline ${declined.id}`))
                     } else {
-                        console.log(`${declined} has been deleted`);
-                        req.flash("success_msg", `${declined} has been deleted`);
+                        console.log(`${declined.id} has been deleted`);
+                        req.flash("success_msg", `${declined.id} has been deleted`);
                         res.redirect("/admin/all-vendors")
                     }
                 }).catch(err => console.log(err))
             } else {
-                console.log(`${declinedFarmer} has been deleted`);
+                console.log(`${declined.id} has been deleted`);
+                req.flash("success_msg", `${declined.id} has been deleted`);
                 res.redirect("/admin/all-farmers");
                 return;
             }
         })
         .catch((err) => console.log(err));
+    },
+    categoryGet: async(req, res) => {
+        
+    },
+    categoryPost: async(req, res) => {
+
     }
 }
