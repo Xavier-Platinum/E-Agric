@@ -1,6 +1,7 @@
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 const { Vendor } = require("../../models/vendorsModels/vendors.model");
 const { User } = require("../../models/usersModels/users.model");
+const { Category } = require("../../models/categoryModels/category.model");
 // const { } = require("../../models/adminModels/")
 
 module.exports = {
@@ -109,9 +110,48 @@ module.exports = {
         .catch((err) => console.log(err));
     },
     categoryGet: async(req, res) => {
-        
+        await Category.find({ approved: true })
+        .exec(async(err, categories) => {
+            const pageTitle = "Categories";
+            res.render("adminViews/categories", { pageTitle , categories});
+        })
     },
     categoryPost: async(req, res) => {
-
+        const { name, typeOfCat } = req.body;
+        if(req.body) {
+            res.render("adminViews/categories", {
+                pageTitle: "Categories",
+                name, 
+                typeOfCat
+            })
+        } else {
+            await Category.findOne({ name: name})
+            .then(async(category) => {
+                if(category) {
+                    console.log(`${category.name} already exists try another`);
+                    req.flash(
+                        "error",
+                        `${category.name} already exists try another please`
+                    )
+                    res.redirect("/admin/category");
+                } else {
+                    const newCategory = new Category({
+                        name,
+                        typeOfCat
+                    });
+                    console.log(newCategory);
+                    await newCategory.save()
+                    .then((category) => {
+                        console.log("New Category saved successfully");
+                        req.flash(
+                            "succes_msg",
+                            `${category.name} saved successfully`
+                        )
+                        res.redirect("/admin/category")
+                    })
+                    .catch((err) => console.log(err));
+                }
+            })
+        }
     }
 }

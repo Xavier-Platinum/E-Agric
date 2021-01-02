@@ -17,7 +17,7 @@
                                             <form action="/admin/category" method="post">
                                                 <div class="form-group">
                                                     <label for="typeOfCat" class="control-label mb-1">Category</label>
-                                                    <select name="typeOfCat" id="typeOfCat" class="form-control">
+                                                    <select name="typeOfCat" id="typeOfCat" class="form-control" aria-valuenow="<%= typeof typeOfCat != 'undefined' ? typeOfCat : '' %> " required>
                                                         <option value="" selected disabled>Choose Category Type</option>
                                                         <option value="news">News Category</option>
                                                         <option value="product">Product Category</option>
@@ -25,7 +25,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="typeOfCat" class="control-label mb-1">Category Name</label>
-                                                    <input id="typeOfCat" name="typeOfCat" type="text" class="form-control" aria-required="true" aria-invalid="false" placeholder="Enter Category Name">
+                                                    <input id="name" name="name" type="text" class="form-control" aria-required="true" aria-invalid="false" placeholder="Enter Category Name" value="<%= typeof name != 'undefined' ? name : '' %> " required>
                                                 </div>
                                                 <!-- <div class="form-g"></div> -->
                                                 <!-- <div class="form-group has-success">
@@ -76,36 +76,30 @@
                                             <strong>Company</strong>
                                             <small> Form</small>
                                         </div>
-                                        <div class="card-body card-block">
-                                            <div class="form-group">
-                                                <label for="company" class=" form-control-label">Company</label>
-                                                <input type="text" id="company" placeholder="Enter your company name" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="vat" class=" form-control-label">VAT</label>
-                                                <input type="text" id="vat" placeholder="DE1234567890" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="street" class=" form-control-label">Street</label>
-                                                <input type="text" id="street" placeholder="Enter street name" class="form-control">
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label for="city" class=" form-control-label">City</label>
-                                                        <input type="text" id="city" placeholder="Enter your city" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label for="postal-code" class=" form-control-label">Postal Code</label>
-                                                        <input type="text" id="postal-code" placeholder="Postal Code" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="country" class=" form-control-label">Country</label>
-                                                <input type="text" id="country" placeholder="Country name" class="form-control">
+                                        <div class="card-body">
+                                            <div class="table-responsive table--no-card">
+                                                <table class="table table-borderless table-striped table-earn">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Name</th>
+                                                            <th>Status</th>
+                                                            <th>Category Type</th>
+                                                            <th>By</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% categories.forEach(category => { %>
+                                                            <tr class="tr-shad">
+                                                                <td><%= category.id %> </td>
+                                                                <td><%= category.name %> </td>
+                                                                <td><%= category.approved %> </td>
+                                                                <td><%= category.typeOfCat %> </td>
+                                                                <td><%= category.createdBy %> </td>
+                                                            </tr>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
