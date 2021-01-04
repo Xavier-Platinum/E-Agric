@@ -107,8 +107,12 @@ module.exports = (passport) => {
                                 await done(err, user);
                             }
                         })
+                    } else {
+                        await done(err, user);
                     }
                 })
+            } else {
+                await done(err, user);
             }
         })
     })
