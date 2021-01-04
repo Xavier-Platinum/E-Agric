@@ -97,6 +97,6 @@ module.exports = {
         res.render("auth/login", { pageTitle });
     },
     authLoginPost: (req, res) => {
-
+        
     }
 }
