@@ -94,9 +94,21 @@ module.exports = (passport) => {
     })
 
     passport.deserializeUser(async(id, done) => {
-        await Admin.findById(id, (err, user) => {
+        await Admin.findById(id, async(err, user) => {
             if(!user) {
-
+                await Vendor.findById(id, async(err, user) => {
+                    if(!user) {
+                        await Farmer.findById(id, async(err, user) => {
+                            if(!user) {
+                                await User.findById(id, async(err, user) => {
+                                    await done(err, user);
+                                })
+                            } else {
+                                await done(err, user);
+                            }
+                        })
+                    }
+                })
             }
         })
     })
