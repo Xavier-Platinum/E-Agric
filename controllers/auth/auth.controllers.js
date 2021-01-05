@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 
 module.exports = {
@@ -96,7 +97,19 @@ module.exports = {
         const pageTitle = "Login";
         res.render("auth/login", { pageTitle });
     },
-    authLoginPost: (req, res) => {
-        
+    authLoginPost: (req, res, next) => {
+        passport.authenticate("local", {
+            successRedirect: "/",
+            failureRedirect: "/auth/login",
+            failureFlash: true,
+            successFlash: true,
+            session: true
+        })(req, res, next)
+    },
+    logout: async(req, res) => {
+        await req.logout();
+        await req.flash("success_msg", "See You Later");
+        await res.redirect("/");
+        console.log("User Logged Out");
     }
 }
