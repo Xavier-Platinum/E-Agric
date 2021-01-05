@@ -3,7 +3,7 @@
 const router = require("express").Router();
 
 // Destructooring controllers
-const { index, about, our_products, farming_practice, shop, news, news_details, contact } = require("../../controllers/defaultControllers/default.controller");
+const { index, about, our_products, farming_practice, shop, news, news_details, contact, profile } = require("../../controllers/defaultControllers/default.controller");
 
 // Home Route
 router.get("/", index);
@@ -29,5 +29,9 @@ router.get("/news-details", news_details);
 
 // contact route
 router.get("/contact", contact);
+
+
+// Profile Route
+router.get("/profile", profile);
 
 module.exports = router;

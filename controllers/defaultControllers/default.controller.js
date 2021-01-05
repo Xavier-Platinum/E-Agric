@@ -30,5 +30,20 @@ module.exports = {
     contact: (req, res) => {
         const pageTitle = "Contact";
         res.render("defaultViews/contact", {pageTitle});
+    },
+    profile: async (req, res) => {
+        console.log(req.user.role);
+        if(req.user.role === "admin") {
+            await res.redirect("/admin");
+        } else if (req.user.role === "vendor") {
+            await res.redirect("/vendor");
+        } else if (req.user.role === "farmer") {
+            await res.redirect("/farmer");
+        } else if (req.user.role === "user") {
+            await res.redirect("/user");
+        } else {
+            await req.flash("error", `User Not Found`);
+            alert("Sorry User Not found, Please Try Again");
+        }
     }
 }

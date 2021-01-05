@@ -3,7 +3,7 @@ const router = require("express").Router();
 // const farmers =  [];
 
 // Desturcturing controllers
-const { authRegisterGet, authLoginGet, authLoginPost} = require("../../controllers/auth/auth.controllers");
+const { authRegisterGet, authLoginGet, authLoginPost, logout} = require("../../controllers/auth/auth.controllers");
 
 // router.route("/register")
 // .get(authRegisterGet)
@@ -16,5 +16,8 @@ router.get("/register", authRegisterGet);
 router.route("/login")
 .get(authLoginGet)
 .post(authLoginPost);
+
+// logout route
+router.get("/logout", logout);
 
 module.exports = router;
