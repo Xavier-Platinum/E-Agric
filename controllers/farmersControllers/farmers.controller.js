@@ -57,7 +57,7 @@ module.exports = {
                     //     cPassword
                     // });
                     console.log("Email already exists");
-                    res.redirect(`/${originalUrl}`);
+                    // res.redirect(`/${originalUrl}`);
                     console.log(req.originalUrl);
                     req.flash(
                         "success_msg",

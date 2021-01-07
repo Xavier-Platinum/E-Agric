@@ -6,6 +6,8 @@ const HOSTNAME = process.env.HOSTNAME || "localhost";
 
 const express = require("express");
 const compression = require("compression");
+const passport = require("passport");
+require("./config/passport")(passport);
 const path = require("path");
 const logger = require("morgan")
 const session = require("express-session");
@@ -13,6 +15,7 @@ const ejs = require("ejs");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
+const mongoStore = require("connect-mongo");
 const bodyParser = require("body-parser");
 const { globalVariables } = require("./config/config");
 const MONGO_LOCAL = require("./config/db.config").MONGO_URI_LOCAL;
@@ -24,6 +27,7 @@ app.use(compression());
 
 // Security middleware
 app.use(helmet());
+
 
 // configuring database
 mongoose.connect(MONGO_LOCAL, {
@@ -44,8 +48,8 @@ mongoose.connect(MONGO_LOCAL, {
 app.use(logger("dev"));
 
 // configuring express
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // body-parser
@@ -55,12 +59,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // express-session middleware
 app.use(session({
 	secret: `${process.env.COOKIE_SECRET}`,
-	resave: false, 
-	saveUninitialized: false,
-	cookie: {maxAge: 1000 * 60 * 60 * 24} //24hours
+	resave: true, 
+	saveUninitialized: true,
+	cookie: {maxAge: 1000 * 60 * 60 * 24},//24hours
+	
 }))
 
 // passport // JWT
+app.use(passport.initialize());
+app.use(passport.session());
 
 // connect flash
 app.use(flash());
@@ -97,7 +104,7 @@ app.use("/farmer", farmersRoutes);
 app.use("/user", userRoutes);
 
 // Error Handling 
-app.use((req, res, next) => {
+app.use(async(req, res, next) => {
 	res.send(`Sorry the page you are looking for cannot be found 
 		or broken URL
 		if you are not redirected to home click <a href="/">here</a>
