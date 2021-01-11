@@ -1,19 +1,21 @@
 module.exports = {
-    ensureAdmin: (req, res, next) => {
-        if(req.user.role === "Admin") {
+    isAdmin: (req, res, next) => {
+        if(req.isAuthenticated() && req.user.role === "admin") {
             next();
-            return; 
+            return;
         } else {
-            req.flash("msg", "Sorry Access Not Granted");
-            res.redirect(`/${originalUrl}`);
+            req.flash("error_msg", "Sorry Admin Privilleges required");
+            res.redirect("/auth/login");
+            // res.redirect(`/${req.originalUrl}`);
         }
     },
     ensureAuthenticated: (req, res, next) => {
-        if(isAuthenticated()){
+        if(req.isAuthenticated()){
             return next();
         } else {
-            req.flash("msg", "Sorry You are Not Permitted");
-            res.redirect(`/${originalUrl}`);
+            req.flash("msg", "Sorry You are Not Authenticated");
+            res.redirect("/auth/login")
+            // res.redirect(`/${originalUrl}`);
         }
     },
     authenticateUser: (req, res, next) => {
@@ -33,5 +35,29 @@ module.exports = {
 
             next();
         } //authenticateRole(role.ADMIN);
+    }, 
+    isFarmer: (req, res, next) => {
+        if (req.isAuthenticated() && req.user.role === "farmer") {
+            return next();
+        } else {
+            req.flash("error_msg", "Sorry Your are not a permitted user");
+            res.redirect(`/${req.originalUrl}`);
+        }
+    }, 
+    isVendor: (req, res, next) => {
+        if (req.user.role === "vendor") {
+            return next();
+        } else {
+            req.flash("error_msg", "Sorry Your are not a permitted user");
+            res.redirect(`/${req.originalUrl}`);
+        }
+    }, 
+    isUser: (req, res, next) => {
+        if (req.user.role === "user") {
+            return next();
+        } else {
+            req.flash("error_msg", "Sorry Your are not a permitted user");
+            res.redirect(`/${req.originalUrl}`);
+        }
     }
 }

@@ -11,17 +11,18 @@ module.exports = {
     },
     authLoginPost: (req, res, next) => {
         passport.authenticate("local", {
-            successRedirect: "/",
+            successRedirect: "/profile",
             failureRedirect: "/auth/login",
             failureFlash: true,
             // successFlash: true,
             // session: true
         })(req, res, next)
+        // res.send("user is logged in")
     },
     logout: async(req, res) => {
         await req.logout();
         await req.flash("success_msg", "See You Later");
-        await res.redirect("/");
+        await res.redirect("/auth/login");
         console.log("User Logged Out");
     }
 }

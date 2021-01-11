@@ -10,7 +10,10 @@ module.exports = {
             await Vendor.countDocuments(async(err, totalVendors) => {
                 await User.countDocuments(async(err, totalUsers) => {
                     const pageTitle = "Admin";
-                    res.render("adminViews/admin", { pageTitle, totalFarmers, totalVendors, totalUsers})
+                    const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+                    res.render("adminViews/admin", { pageTitle, totalFarmers, totalVendors, totalUsers, email, avatar, name})
                 })
             })
         })
@@ -23,7 +26,10 @@ module.exports = {
             await Farmer.find({approved: true})
             .exec(async(err, farmersApproved) => {
                 let pageTitle = "All Farmers";
-                await res.render("adminViews/all-farmers", { pageTitle, farmers, farmersApproved });
+                const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+                await res.render("adminViews/all-farmers", { pageTitle, name, email, avatar, farmers, farmersApproved });
             })
             // if (err) throw err;
             // else {
@@ -38,7 +44,10 @@ module.exports = {
             await Vendor.find({ approved: true })
             .exec(async (err, vendorsApproved) => {
                 let pageTitle = "All Vendors";
-                await res.render("adminViews/all-vendors", { pageTitle, vendors, vendorsApproved});
+                const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+                await res.render("adminViews/all-vendors", { pageTitle, name, email, avatar, vendors, vendorsApproved});
             })
             // if (err) throw err;
             // else {
@@ -53,7 +62,10 @@ module.exports = {
             if (err) throw err;
             else {
                 let pageTitle = "All Users";
-                res.render("adminViews/all-users", { pageTitle, users });
+                const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+                res.render("adminViews/all-users", { pageTitle, name, email, avatar, users });
             }
         })
     },
@@ -113,12 +125,18 @@ module.exports = {
         await Category.find({ approved: true })
         .exec(async(err, categories) => {
             const pageTitle = "Categories";
-            res.render("adminViews/categories", { pageTitle , categories});
+            const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+            res.render("adminViews/categories", { pageTitle , name, email, avatar, categories});
         })
     },
     addCategoryGet: (req, res) => {
         const pageTitle = "Add Category";
-        res.render("adminViews/add-category", { pageTitle })
+        const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+        res.render("adminViews/add-category", { pageTitle, name, email, avatar })
     },
     addCategoryPost: async(req, res) => {
         const { name, typeOfCat } = req.body;

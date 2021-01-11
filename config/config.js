@@ -4,8 +4,8 @@ module.exports = {
         res.locals.error_msg = req.flash("error_msg");
         res.locals.error = req.flash("error");
         res.locals.user = req.user ? true : false;
-        // res.locals.session = req.session;
+        res.locals.session = req.session;
         
-        return next();
+        next();
     }
 }

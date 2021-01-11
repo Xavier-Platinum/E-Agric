@@ -1,28 +1,29 @@
 const router = require("express").Router();
 
+const { isAdmin, ensureAuthenticated } = require("../../config/auth.config");
 // Destructuring Routes
 const { index, all_farmersGet, approve, decline, all_vendorsGet, all_usersGet, categoryGet, categoryPost, addCategoryGet, addCategoryPost } = require("../../controllers/adminControllers/admin.controller");
 
 // home route
-router.get("/",index);
+router.get("/", ensureAuthenticated, isAdmin, index);
 
 // All farmers
-router.get("/all-farmers", all_farmersGet);
+router.get("/all-farmers", ensureAuthenticated, isAdmin, all_farmersGet);
 
 // all Vendors
-router.get("/all-vendors", all_vendorsGet);
+router.get("/all-vendors", ensureAuthenticated, isAdmin, all_vendorsGet);
 
 // All Users
-router.get("/all-users", all_usersGet);
+router.get("/all-users", ensureAuthenticated, isAdmin, all_usersGet);
 
 // approve farmer
-router.get("/approve/:_id", approve);
+router.get("/approve/:_id", ensureAuthenticated, isAdmin, approve);
 
 // decline farmer
-router.get("/decline/:_id", decline);
+router.get("/decline/:_id", ensureAuthenticated, isAdmin, decline);
 
 // call categories
-router.get("/category", categoryGet)
+router.get("/category", ensureAuthenticated, isAdmin, categoryGet)
 
 // categories routes
 router.route("/add-category")

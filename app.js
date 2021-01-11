@@ -5,9 +5,8 @@ const PORT = process.env.PORT || 9001;
 const HOSTNAME = process.env.HOSTNAME || "localhost";
 
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const compression = require("compression");
-const passport = require("passport");
-require("./config/passport")(passport);
 const path = require("path");
 const logger = require("morgan")
 const session = require("express-session");
@@ -15,7 +14,9 @@ const ejs = require("ejs");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const mongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+require("./config/passport")(passport);
 const bodyParser = require("body-parser");
 const { globalVariables } = require("./config/config");
 const MONGO_LOCAL = require("./config/db.config").MONGO_URI_LOCAL;
@@ -23,10 +24,10 @@ const MONGO_LOCAL = require("./config/db.config").MONGO_URI_LOCAL;
 const app = express();
 
 // compression algorithm
-app.use(compression());
+// app.use(compression());
 
 // Security middleware
-app.use(helmet());
+// app.use(helmet());
 
 
 // configuring database
@@ -46,11 +47,16 @@ mongoose.connect(MONGO_LOCAL, {
 // configuring morgan
 // app.use(logger("combined"));
 app.use(logger("dev"));
+app.use(cookieParser());
 
 // configuring express
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+
+// Setting up template engine
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 // body-parser
 app.use(bodyParser.json());
@@ -59,9 +65,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // express-session middleware
 app.use(session({
 	secret: `${process.env.COOKIE_SECRET}`,
-	resave: true, 
-	saveUninitialized: true,
-	cookie: {maxAge: 1000 * 60 * 60 * 24},//24hours
+	resave: false, 
+	saveUninitialized: false,
+	cookie: { secure: false, maxAge: Date.now() + 60000},//24hours
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection,
+		ttl: 600 * 6000
+	})
 	
 }))
 
@@ -74,10 +84,6 @@ app.use(flash());
 
 // Globla Env
 app.use(globalVariables);
-
-// Setting up template engine
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 // routing
 // DEFAULT ROUTES //
@@ -111,7 +117,7 @@ app.use(async(req, res, next) => {
 	`)
 	console.log(req.originalUrl);
 	// res.redirect("/")
-	return next();
+	next();
 	// res.redirect("/");
 })
 
