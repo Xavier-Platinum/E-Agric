@@ -1,10 +1,15 @@
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
+const randomString = require("randomstring");
 const { Farmer } = require("../../models/farmersModel/farmers.model");
 
 module.exports = {
     farmersIndex: (req, res) => {
         const pageTitle = "Farmer";
-        res.render("farmersViews/index", { pageTitle });
+        const name = req.user.name;
+        const email = req.user.email;
+        const avatar = req.user.avatar;
+        res.render("farmersViews/index", { pageTitle, name, email, avatar });
     },
     farmersRegisterGet: (req, res) => {
         const pageTitle = "Farmers Registration";
@@ -57,16 +62,22 @@ module.exports = {
                     //     cPassword
                     // });
                     console.log("Email already exists");
-                    // res.redirect(`/${originalUrl}`);
+                    res.redirect(`/farmer/register`);
                     console.log(req.originalUrl);
                     req.flash(
-                        "success_msg",
+                        "error_msg",
                         "Email already exists"
                     )
                 } else {
+                    const avatar = gravatar.url(req.body.email, {
+                        s: "200", //size
+                        r: "pg", //rating
+                        d: "mm" //default
+                    })
                     const newFarmer = new Farmer({
                         name,
                         email,
+                        avatar,
                         password
                     });
                     console.log(newFarmer);
