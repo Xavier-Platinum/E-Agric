@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const { ensureAuthenticated, isFarmer } = require("../../config/auth.config");
 // destructuring controllers
-const { farmersIndex, farmersRegisterGet, farmersRegisterPost } = require("../../controllers/farmersControllers/farmers.controller");
+const { farmersIndex, farmersRegisterGet, farmersRegisterPost, farmers_profile_update, farmers_profile_updatePost } = require("../../controllers/farmersControllers/farmers.controller");
 
 // router.get("/register", farmersRegisterGet, farmersRegisterPost);
 
@@ -14,6 +14,11 @@ router.get("/", ensureAuthenticated, isFarmer, farmersIndex)
 router.route("/register")
 .get(farmersRegisterGet)
 .post(farmersRegisterPost);
+
+// profile update 
+router.route("/update-profile")
+.get(farmers_profile_update)
+.post(farmers_profile_updatePost);
 
 
 module.exports = router;
