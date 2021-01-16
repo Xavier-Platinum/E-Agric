@@ -117,32 +117,77 @@ module.exports = {
         res.render("farmersViews/update-profile", {pageTitle, name, email,avatar,phone, address});
     },
     farmers_profile_updatePost: async( req, res ) => {
-        const id = req.user.id;
-        let {name, email, phone, address, avatar } = req.body;
+        const _id = req.user.id;
+        let {name, email, phone, address } = req.body;
+        const avatar = req.file;
+        let errors = [];
         console.log("Hiiii!!!!!", req.body);
+        console.log("!!!!!!!!:::::::", avatar);
 
-        await Farmer.findByIdAndUpdate(id, req.body)
-        .then(async(updateFarmer) => {
-            if (!updateFarmer) {
-                req.flash("error_msg", "Cannot update");
-            } else {
-                // uploading avatar to cloudinary
-                await cloudinary.v2.uploader.upload(req.file.path, async(err, result) => {
-                    if (!req.file.path || !result) {
-                        updateFarmer.avatar = "undefined"
-                    } else {
-                        updateFarmer.avatar = result.secure_url
-                    }
-                })
-                await updateFarmer.save();
-                req.flash("success_msg", "Your Profile was updated Successfully");
-                res.redirect("/farmer/profile");
-            }
-        })
-        .catch((err) => {
-            console.log("An error occured", err);
-            req.flash("error_msg", "Your update couldn't process");
-            res.redirect("/farmer/update-profile");
-        })
+        // verifying
+        if (!avatar || !name) {
+            errors.push({msg: "All field required"})
+        } else {
+            await Farmer.findByIdAndUpdate({_id}, req.body)
+            .then(async(updateFarmer) => {
+                if (!updateFarmer) {
+                    req.flash("error_msg", "Cannot update");
+                } else {
+                    await cloudinary.v2.uploader.upload(
+                        req.file.path,
+                        async (err, result) => {
+                            if (!result) {
+                                console.log(`Upload failed ::::::`);
+                                // flash here
+                            } else {
+                                const updateFarmer = new Farmer({
+                                    name,
+                                    email,
+                                    phone,
+                                    address,
+                                    avatar: await result.secure_url,
+                                })
+                                await updateFarmer.save();
+                                req.flash("success_msg", "Your Profile was updated Successfully");
+                                res.redirect("/farmer/profile");
+                            }
+                        }
+                    )
+                }
+            })
+        }
+
+        
+
+        // await Farmer.findByIdAndUpdate(id, req.body)
+        // .then(async(updateFarmer) => {
+        //     if (!updateFarmer) {
+        //         req.flash("error_msg", "Cannot update");
+        //     } else {
+        //         // uploading avatar to cloudinary
+        //         await cloudinary.v2.uploader.upload(req.file.path, async(err, result) => {
+        //             if (!req.file.path || !result) {
+        //                 updateFarmer.avatar = "undefined"
+        //             } else {
+        //                 updateFarmer.avatar = result.secure_url
+        //             }
+        //         })
+        //         await updateFarmer.save();
+        //         req.flash("success_msg", "Your Profile was updated Successfully");
+        //         res.redirect("/farmer/profile");
+        //     }
+        // })
+        // .catch((err) => {
+        //     console.log("An error occured", err);
+        //     req.flash("error_msg", "Your update couldn't process");
+        //     res.redirect("/farmer/update-profile");
+        // })
+    }, 
+    add_productGet: (req, res) => {
+        const pageTitle = "Add Product";
+        const name = req.user.name;
+        const email = req.user.email;
+        const avatar = req.user.avatar;
+        res.render("products/add-product", { pageTitle, name, email, avatar });
     }
 }
