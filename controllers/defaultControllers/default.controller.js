@@ -1,3 +1,4 @@
+const { Product } = require("../../models/products/products.model");
 module.exports = {
     index: (req, res) => {
         const pageTitle = "Home";
@@ -15,9 +16,11 @@ module.exports = {
         const pageTitle = "Farming Practice";
         res.render("defaultViews/farming-practice", {pageTitle});
     },
-    shop: (req, res) => {
-        const pageTitle = "Shop";
-        res.render("defaultViews/shop", {pageTitle});
+    shop: async(req, res) => {
+        await Product.find({status: true}, async(err, products) => {
+            const pageTitle = "Shop";
+        res.render("defaultViews/shop", {pageTitle, products});
+        })
     },
     news: (req, res) => {
         const pageTitle = "News";

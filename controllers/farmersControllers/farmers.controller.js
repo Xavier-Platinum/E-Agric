@@ -3,6 +3,7 @@ const gravatar = require("gravatar");
 const cloudinary = require("../../config/cloudinary");
 const randomString = require("randomstring");
 const { Farmer } = require("../../models/farmersModel/farmers.model");
+const { Product } = require("../../models/products/products.model");
 
 module.exports = {
     farmersIndex: (req, res) => {
@@ -183,6 +184,17 @@ module.exports = {
         //     res.redirect("/farmer/update-profile");
         // })
     }, 
+    all_products: async(req, res) => {
+        await Product.countDocuments(async(err, totalProducts) => {
+            await Product.find({}, async(err, products) => {
+                const pageTitle = "Add Product";
+                const name = req.user.name;
+                const email = req.user.email;
+                const avatar = req.user.avatar;
+                res.render("farmersViews/all-products", { pageTitle, name, email, avatar, totalProducts, products });
+            })
+        })
+    },
     add_productGet: (req, res) => {
         const pageTitle = "Add Product";
         const name = req.user.name;

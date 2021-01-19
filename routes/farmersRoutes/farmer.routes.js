@@ -4,7 +4,7 @@ const upload = require("../../config/multer");
 
 const { ensureAuthenticated, isFarmer } = require("../../config/auth.config");
 // destructuring controllers
-const { farmersIndex, farmersRegisterGet, farmersRegisterPost, farmers_profile_update, farmers_profile_updatePost, add_productGet } = require("../../controllers/farmersControllers/farmers.controller");
+const { farmersIndex, farmersRegisterGet, farmersRegisterPost, farmers_profile_update, farmers_profile_updatePost, add_productGet, all_products } = require("../../controllers/farmersControllers/farmers.controller");
 const { product_post } = require("../../controllers/products/products.controller");
 
 // router.get("/register", farmersRegisterGet, farmersRegisterPost);
@@ -24,6 +24,9 @@ router.route("/update-profile")
 .post( upload.single("avatar"), farmers_profile_updatePost);
 
 // router.get("/add-product", add_productGet)
+
+// 
+router.get("/all-products", all_products);
 
 router.route("/add-product")
 .get(add_productGet)

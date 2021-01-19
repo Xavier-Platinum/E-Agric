@@ -22,11 +22,17 @@ const productsSchema = new Schema({
         type: Date,
         default: Date.now()
     },
+    amount: Number,
+    stock: Number,
     promo: String,
     description: String,
     price: {
         type: String,
         required: true
+    },
+    status: {
+        type: Boolean,
+        default: false
     }
 })
 

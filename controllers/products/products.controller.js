@@ -34,8 +34,9 @@ module.exports = {
                             productImage: await result.secure_url,
                         });
                         await newProduct.save();
+                        console.log("Saved", newProduct);
                         req.flash("success_msg", "Product added successfully");
-                        res.redirect("/farmer");
+                        res.redirect("/farmer/all-products");
                     }
                 }
             )
