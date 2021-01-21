@@ -221,5 +221,17 @@ module.exports = {
         //     const avatar = req.user.avatar;
         //     res.render("adminViews/all-products", { pageTitle, name, email, avatar, falseProducts })
         // })
+    },
+    all_approvedProductsGet: async(req, res) => {
+        await Product.countDocuments({approved: true}, async(err, totalApproved) => {
+            await Product.find({approved: true})
+            .exec(async(err, productsApproved) => {
+                const pageTitle = "All Products";
+                const name = req.user.name;
+                const email = req.user.email;
+                const avatar = req.user.avatar;
+                res.render("adminViews/approved-products", { pageTitle, name, email, avatar, productsApproved, totalApproved })
+            })
+        })
     }
 }
