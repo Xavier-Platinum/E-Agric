@@ -608,7 +608,13 @@
                                                         <!-- <td><%= product.category %> </td> -->
                                                         <td><%= product.description %> </td>
                                                         <td><%= product.postedBy %> </td>
-                                                        <td class=""><%= product.approved %> </td>
+                                                        <td style="color: skyblue;">
+                                                            <% if (product.approved === false) { %>
+                                                                pending
+                                                            <% } else { %>
+                                                                undefined
+                                                            <% } %> 
+                                                        </td>
                                                         <td><%= product.price %> </td>
                                                         <td>
                                                             <div style="display: flex;">

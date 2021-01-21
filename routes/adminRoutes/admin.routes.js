@@ -20,7 +20,7 @@ router.get("/all-users", ensureAuthenticated, isAdmin, all_usersGet);
 router.get("/approve/:_id", ensureAuthenticated, isAdmin, approve);
 
 // decline farmer
-router.get("/decline/:_id", ensureAuthenticated, isAdmin, decline);
+router.get("/delete/:_id", ensureAuthenticated, isAdmin, decline);
 
 // call categories
 router.get("/category", ensureAuthenticated, isAdmin, categoryGet)
