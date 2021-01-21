@@ -2,6 +2,7 @@ const { Farmer } = require("../../models/farmersModel/farmers.model");
 const { Vendor } = require("../../models/vendorsModels/vendors.model");
 const { User } = require("../../models/usersModels/users.model");
 const { Category } = require("../../models/categoryModels/category.model");
+const { Product } = require("../../models/products/products.model");
 // const { } = require("../../models/adminModels/")
 
 module.exports = {
@@ -78,7 +79,18 @@ module.exports = {
                 await Vendor.findOne({_id})
                 .then(async(approve) => {
                     if(!approve) {
-                        return done(null, false, req.flash("error", `Could not approve user ${approve.id}`))
+                        await Product.findOne({_id})
+                        .then(async(approve) => {
+                            if(!approve) {
+                                return done(null, false, req.flash("error", `Could not approve user ${approve.id}`))
+                            } else {
+                                approve.approved = true;
+                                await approve.save();
+                                console.log(`${approve.id} has been approved succesfully`);
+                                req.flash("success_msg", `${approve.id} has been approved successfully`);
+                                res.redirect("/admin/all-products");
+                            }
+                        }).catch((err) => console.log(err));
                     }
                     else {
                         approve.approved = true;
@@ -105,7 +117,16 @@ module.exports = {
                 await Vendor.findByIdAndDelete(id)
                 .then(async(declined) => {
                     if(!declined) {
-                        return done(null, false, req.flash("error", `Could Not Decline ${declined.id}`))
+                        await Product.findByIdAndDelete(id)
+                        .then(async(declined) => {
+                            if(!declined) {
+                                return done(null, false, req.flash("error", `Could Not Decline ${declined.id}`))
+                            } else {
+                                console.log(`${declined.id} has been deleted`);
+                                req.flash("success_msg", `${declined.id} has been deleted`);
+                                res.redirect("/admin/all-vendors")
+                            }
+                        }).catch((err) => console.log(err));
                     } else {
                         console.log(`${declined.id} has been deleted`);
                         req.flash("success_msg", `${declined.id} has been deleted`);
@@ -177,5 +198,28 @@ module.exports = {
             })
             .catch((err) => console.log(err));
         }
+    },
+    all_productsGet: async(req, res) => {
+        await Product.countDocuments({approved: false}, async(err, totalProducts) => {
+            await Product.find({approved: false})
+            .exec(async(err, products) => {
+                await Product.find({approved: true})
+                .exec(async(err, productsApproved) => {
+                    const pageTitle = "All Products";
+                    const name = req.user.name;
+                    const email = req.user.email;
+                    const avatar = req.user.avatar;
+                    res.render("adminViews/all-products", { pageTitle, name, email, avatar, products, productsApproved, totalProducts })
+                })
+        })
+        })
+        // await Product.find({}).exec(async(err, falseProducts) => {
+        //     console.log(falseProducts);
+        //     const pageTitle = "All Products";
+        //     const name = req.user.name;
+        //     const email = req.user.email;
+        //     const avatar = req.user.avatar;
+        //     res.render("adminViews/all-products", { pageTitle, name, email, avatar, falseProducts })
+        // })
     }
 }

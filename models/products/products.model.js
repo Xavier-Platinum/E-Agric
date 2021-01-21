@@ -22,6 +22,10 @@ const productsSchema = new Schema({
         type: Date,
         default: Date.now()
     },
+    approved: {
+        type: Boolean,
+        default: false
+    },
     amount: Number,
     stock: Number,
     promo: String,

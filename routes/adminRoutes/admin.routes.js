@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const { isAdmin, ensureAuthenticated } = require("../../config/auth.config");
 // Destructuring Routes
-const { index, all_farmersGet, approve, decline, all_vendorsGet, all_usersGet, categoryGet, categoryPost, addCategoryGet, addCategoryPost } = require("../../controllers/adminControllers/admin.controller");
+const { index, all_farmersGet, approve, decline, all_vendorsGet, all_usersGet, categoryGet, categoryPost, addCategoryGet, addCategoryPost, all_productsGet } = require("../../controllers/adminControllers/admin.controller");
 
 // home route
 router.get("/", ensureAuthenticated, isAdmin, index);
@@ -29,5 +29,8 @@ router.get("/category", ensureAuthenticated, isAdmin, categoryGet)
 router.route("/add-category")
 .get(addCategoryGet)
 .post(addCategoryPost);
+
+// products routing
+router.get("/all-products", all_productsGet);
 
 module.exports = router;

@@ -1,6 +1,6 @@
-<%- include("../partials/farmersPartials/header") %> 
-<%- include("../partials/farmersPartials/navBar") %> 
-<%- include("../partials/farmersPartials/breadCrumbs") %> 
+<%- include("../partials/adminPartials/header") %> 
+<%- include("../partials/adminPartials/navBar") %> 
+
 
                 <!-- MAIN CONTENT-->
                 <div class="main-content">
@@ -579,6 +579,7 @@
                                     </div>
                                 </div>
                             </div> -->
+                            admin
                             <h1 class="text-center">All Products (<%= totalProducts %> )</h1>
                             <div class="row m-t-30">
                                 <div class="col-md-12">
@@ -587,12 +588,13 @@
                                         <table class="table table-borderless table-data3">
                                             <thead>
                                                 <tr>
-                                                    <th>PID</th>
-                                                    <th>Image</th>
                                                     <th>Product</th>
-                                                    <th>Category</th>
+                                                    <th>Image</th>
+                                                    <!-- <th>Product</th> -->
+                                                    <!-- <th>Category</th> -->
                                                     <th>description</th>
-                                                    <th>approved</th>
+                                                    <th>By</th>
+                                                    <th>status</th>
                                                     <th>price</th>
                                                     <th>action</th>
                                                 </tr>
@@ -600,22 +602,23 @@
                                             <tbody>
                                                 <% products.forEach((product) => { %>
                                                     <tr>
-                                                        <td><%= product.pid %> </td>
+                                                        <td><%= product.name %>  (<%= product.pid %>) </td>
                                                         <td><img src="<%= product.productImage %>" alt="<%= product.pid %>" width="30px"> </td>
-                                                        <td><%= product.name %> </td>
-                                                        <td><%= product.category %> </td>
+                                                        <!-- <td><%= product.name %> </td> -->
+                                                        <!-- <td><%= product.category %> </td> -->
                                                         <td><%= product.description %> </td>
-                                                        <td class="process"><%= product.approved %> </td>
+                                                        <td><%= product.postedBy %> </td>
+                                                        <td class=""><%= product.approved %> </td>
                                                         <td><%= product.price %> </td>
                                                         <td>
                                                             <div style="display: flex;">
-                                                                <span  style="padding: 1rem;"><a href="#"><i class="fas fa-check-square"></i></a></span>
-															    <span style="padding: 1rem;"><a href="#"><i class="fas fa-trash-alt"></i></a></span>
+                                                                <span  style="padding: 1rem; color: green;"><a href="/admin/approve/<%= product._id %> " style="color: green;"><i class="fas fa-check-square"></i></a></span>
+															    <span  style="padding: 1rem; color: yellow;"><a href="/admin/decline/<%= product._id %>" style="color: yellow;"><i class="fas fa-ban"></i></a></span>
+															    <span style="padding: 1rem; color: red;"><a href="/admin/delete/<%= product._id %>" style="color: red;"><i class="fas fa-trash-alt"></i></a></span>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                 <% }) %>
-                                                hiiiiiiii
                                             </tbody>
                                         </table>
                                     </div>
@@ -623,4 +626,4 @@
                                 </div>
                             </div>
 
-<%- include("../partials/farmersPartials/footer") %> 
+<%- include("../partials/adminPartials/footer") %> 
