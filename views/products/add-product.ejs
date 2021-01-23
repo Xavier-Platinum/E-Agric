@@ -45,8 +45,14 @@
                                                     <label for="email-input" class=" form-control-label">Category</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="text" id="category" name="category" placeholder="<%=  %>" class="form-control">
-                                                    <small class="help-block form-text">Your category</small>
+                                                    <label for="exampleInputEmail1">Category</label>
+                                                    <select name="category" class="form-control form-control-line">
+                                                        <option value="default" selected>Default</option>
+                                                        <%categories.forEach(categories => {%>    
+                                                        <option value="<%= categories.name %>" ><%= categories.name %> </option>
+                                                        <% }) %> 
+                                                        
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -75,13 +81,22 @@
                                                     <small class="help-block form-text">price Update</small>
                                                 </div>
                                             </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="password-input" class=" form-control-label">Price</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="checkbox" id="price" name="shipping" placeholder="price" class="form-control">
+                                                    <small class="help-block form-text">Shipping</small>
+                                                </div>
+                                            </div>
                                             <div class="card-footer">
                                                 <button type="submit" class="btn btn-primary btn-sm">
                                                     <i class="fa fa-dot-circle-o"></i> Submit
                                                 </button>
-                                                <!-- <button type="reset" class="btn btn-danger btn-sm">
+                                                <button type="reset" class="btn btn-danger btn-sm">
                                                     <i class="fa fa-ban"></i> Reset
-                                                </button> -->
+                                                </button>
                                             </div>
                                         </form>
                                     </div>

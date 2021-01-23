@@ -16,7 +16,9 @@ const productsSchema = new Schema({
         ref: "Farmer"
     },
     category: {
-        type: String,
+        type: String
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: "Category"
     },
     dateCreated: {
         type: Date,
@@ -26,18 +28,33 @@ const productsSchema = new Schema({
         type: Boolean,
         default: false
     },
-    amount: Number,
-    stock: Number,
+    quantity: {
+        type: Number
+    },
+    sold: {
+        type: Number,
+        default: 0
+    },
     promo: String,
-    description: String,
+    description: {
+        type: String,
+        required: true,
+        maxlength: 1000
+    },
     price: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxlength: 32
     },
     status: {
         type: Boolean,
         default: false
+    },
+    shipping: {
+        // required: true,
+        type: Boolean
     }
-})
+}, {timestamps: true});
 
 module.exports = {Product: mongoose.model("products", productsSchema)};

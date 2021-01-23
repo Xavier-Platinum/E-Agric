@@ -1,4 +1,5 @@
 const { Product } = require("../../models/products/products.model");
+const { Order, CartItem } = require("../../models/orders/order.model");
 module.exports = {
     index: (req, res) => {
         const pageTitle = "Home";
@@ -17,7 +18,7 @@ module.exports = {
         res.render("defaultViews/farming-practice", {pageTitle});
     },
     shop: async(req, res) => {
-        await Product.find({status: true}, async(err, products) => {
+        await Product.find({approved: true}, async(err, products) => {
             const pageTitle = "Shop";
         res.render("defaultViews/shop", {pageTitle, products});
         })
@@ -48,5 +49,17 @@ module.exports = {
             await req.flash("error", `User Not Found`);
             alert("Sorry User Not found, Please Try Again");
         }
+    },
+    place_order: async(req, res, next, id) => {
+        console.log("You hit me!!!!!!")
+        Order.findById(id)
+        .populate("products.product", "name price")
+        .exec((err, order) => {
+            if(err || !order) {
+                return res.status(400).json({
+                    error: "could not add to cart"
+                })
+            }
+        })
     }
 }
