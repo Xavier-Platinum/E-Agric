@@ -12,8 +12,10 @@ const productsSchema = new Schema({
         type: String
     },
     postedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Farmer"
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Farmer"
+        }]
     },
     category: {
         type: String

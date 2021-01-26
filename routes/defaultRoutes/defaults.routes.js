@@ -31,7 +31,7 @@ router.get("/news-details", news_details);
 router.get("/contact", contact);
 
 // add to cart
-router.post("/add-to-cart", place_order);
+router.post("/add-to-cart/:id", place_order);
 
 // Profile Route
 router.get("/profile", profile);

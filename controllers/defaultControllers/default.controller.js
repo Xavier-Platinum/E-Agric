@@ -51,15 +51,53 @@ module.exports = {
         }
     },
     place_order: async(req, res, next, id) => {
-        console.log("You hit me!!!!!!")
-        Order.findById(id)
-        .populate("products.product", "name price")
-        .exec((err, order) => {
-            if(err || !order) {
-                return res.status(400).json({
-                    error: "could not add to cart"
-                })
-            }
-        })
+        res.send("You hit me")
+        // Order.findById(id)
+        // .populate("products.product", "name price")
+        // .exec((err, order) => {
+        //     if(err || !order) {
+        //         return res.status(400).json({
+        //             error: "could not add to cart"
+        //         })
+        //     }
+        // })
     }
 }
+
+// router.post("/newsletter", async(req, res) => {
+//     const {email} = req.body
+    
+//     const data = {
+//         members:[
+//           {
+//             email_address:req.body.email,
+//             status:"subscribed",
+//             // merge_fields:{
+//             //     FNAME:username,
+//             // }
+//           }
+//         ]
+//       }
+//       const postData = JSON.stringify(data) 
+//       const options = {
+//         url :"https://us19.api.mailchimp.com/3.0/lists/02e1d16e87",
+//         method:'POST',
+//         headers:{
+//           Authorization:"auth API_KEY"
+//         },
+//         body:postData
+//       };
+  
+//       request(options, (err, response,body)=>{
+//         if(err){
+//           console.log("MAILCHIMP: ERROR", err)
+//         } else{
+//           if(response.statusCode === 200){
+//             console.log("SUCCESS")
+//           } else {
+//             console.log("FAILED")
+//           }
+//         }
+//       })
+      
+// })
