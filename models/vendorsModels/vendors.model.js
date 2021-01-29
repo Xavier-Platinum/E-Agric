@@ -40,6 +40,8 @@ const vendorsSchema = new Schema({
     transactionId: {
         type: String
     }
+}, {
+    timestamps: true
 })
 
 module.exports = {Vendor: mongoose.model("vendor", vendorsSchema)};

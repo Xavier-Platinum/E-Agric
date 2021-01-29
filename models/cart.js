@@ -1,29 +1,35 @@
-// creating  and adding item to cart (cart constructor)
-//===================================getting the old cart===================================
-module.exports = function Cart(oldCart){
-    this.items = oldCart.items || {};
-    this.totalQty = oldCart.totalQty || 0;
-    this.totalPrice = oldCart.totalPrice || 0;
-//==================================adding a new item to the cart===========================
-    this.add = function(item, id){
-        var storedItem = this.items[id];
-        if(!storedItem) {
-            storedItem = this.items[id] = {item: item, qty: 0, price: 0}; 
-        }
-        storedItem.qty++;
-        storedItem.price = storedItem.item.price * storedItem.qty;
-        this.totalQty++;
-        this.totalPrice += storedItem.item.price;
-        
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-    };
-//============================outputting list of product==========================================
-    this.generateArray = function() {
-        var arr = [];
-        for (var id in this.items) {
-            arr.push(this.items[id]);
+const cartSchema = new Schema ({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "Farmer",
+        // required: true
+    },
+    items: [
+        {
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: "Product",
+                // required: true
+            },
+            title: {
+                type: String,
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
         }
-        return arr;
-    };
+    ]
+}, {
+    timestamps: true
+})
 
-};
+module.exports = {Cart: mongoose.model("Carts", cartSchema)};

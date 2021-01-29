@@ -40,6 +40,8 @@ const farmersSchema = new Schema({
     transactionId: {
         type: String
     }
+}, {
+    timestamps: true
 })
 
 module.exports = {Farmer: mongoose.model("farmers", farmersSchema)};

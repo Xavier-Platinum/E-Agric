@@ -1,38 +1,37 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const { ObjectId } = mongoose.Schema;
+const { Schema } = mongoose;
 
-const CartItemSchema = new mongoose.Schema(
-    {
-        product: { type: ObjectId, ref: "Product" },
-        name: String,
-        price: Number,
-        count: Number
+const orderSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        // required: true
     },
-    { timestamps: true }
-);
-
-const CartItem = mongoose.model("CartItem", CartItemSchema);
-// module.exports = {CartItem: mongoose.model("Order", orderSchema, cartItem)};
-
-const OrderSchema = new mongoose.Schema(
-    {
-        products: [CartItemSchema],
-        transaction_id: {},
-        amount: { type: Number },
-        address: String,
-        status: {
-            type: String,
-            default: "Not processed",
-          enum: ["Not processed", "Processing", "Shipped", "Delivered", "Cancelled"] // enum means string objects
-        },
-        updated: Date,
-        user: { type: ObjectId, ref: "User" }
+    productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'products',
+        // required: true
     },
-    { timestamps: true }
-);
+    title: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    paymentStatus: {
+        type: Boolean,
+        default: false
+    },
+    deliveryStatus: {
+        type: Boolean,
+        default: false
+    }
+}, {timestamps: true})
 
-// module.exports = {Order: mongoose.model("Order", orderSchema, cartItem)};
-const Order = mongoose.model("Order", OrderSchema);
-
-module.exports = { Order, CartItem };
+module.exports = {Order: mongoose.model("Order", orderSchema)};

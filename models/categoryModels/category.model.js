@@ -22,6 +22,8 @@ const categorySchema = new Schema({
         type: Date,
         default: Date.now()
     }
+}, {
+    timestamps: true
 })
 
 module.exports = {Category: mongoose.model("categories", categorySchema)};

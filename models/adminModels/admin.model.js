@@ -22,6 +22,8 @@ const adminSchema = new Schema({
     phone: {
         type: Number
     }
+}, {
+    timestamps: true
 })
 
 module.exports = {Admin: mongoose.model("admin", adminSchema)}

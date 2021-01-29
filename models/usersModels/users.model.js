@@ -40,6 +40,8 @@ const usersSchema = new Schema({
     transactionId: {
         type: String
     }
+}, {
+    timestamps: true
 })
 
 module.exports = {User: mongoose.model("user", usersSchema)};
