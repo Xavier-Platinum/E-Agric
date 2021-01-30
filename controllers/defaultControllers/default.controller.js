@@ -67,7 +67,7 @@ module.exports = {
         const pageTitle = "Cart";
         await Cart.findOne({userId: req.user.id})
         .then((cart) => {
-            res.render("defaultView/carts", {cart, pageTitle})
+            // res.render("defaultView/carts", {cart, pageTitle})   
         }).catch((err) => console.log(err));
     },
     add_to_cart: async(req, res) => {
@@ -75,7 +75,7 @@ module.exports = {
         const id = req.params.id;
         await Cart.findOne({userId: req.user.id})
         .then(async(cart) => {
-            if(!cart) {
+            if(cart) {
                 console.log("Sorry!!!!");
             } else {
                 await Product.findOne({_id: id})

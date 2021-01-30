@@ -3,7 +3,7 @@
 const router = require("express").Router();
 
 // Destructooring controllers
-const { index, about, our_products, farming_practice, shop, news, news_details, contact, profile, place_order, add_to_cart } = require("../../controllers/defaultControllers/default.controller");
+const { index, about, our_products, farming_practice, shop, news, news_details, contact, profile, place_order, add_to_cart, getCart } = require("../../controllers/defaultControllers/default.controller");
 
 // Home Route
 router.get("/", index);
@@ -34,7 +34,10 @@ router.get("/contact", contact);
 
 
 // add to cart
-router.get("/add-to-cart", add_to_cart);
+// router.get("/add-to-cart", add_to_cart);
+router.route("/add-to-cart")
+// .get(getCart)
+.get(add_to_cart)
 
 // Profile Route
 router.get("/profile", profile);
