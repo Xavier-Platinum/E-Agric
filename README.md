@@ -24,3 +24,36 @@ This is an E-Agric commerce site.
     git remote add origin https://github.com/<user_name>/<repository_name>.git
     git branch -M main
     git push -u origin main
+
+### `Project Description`
+##  Admin Roles
+    - super roles as super user
+    - - `Create`-
+                -
+                -
+
+    - - `Update`-
+                -
+                -
+
+    - - `Delete`-
+                -
+                -
+
+    - - `Read`  -
+                -
+                -
+
+## Farmers Roles 
+
+    - - `Read`  -
+                -
+                -
+
+    - - `Create`-
+                -
+                -
+
+    - - `Update`-
+                -
+                -
