@@ -601,7 +601,7 @@
                                                 <% products.forEach((product) => { %>
                                                     <tr>
                                                         <td><%= product.pid %> </td>
-                                                        <td><img src="<%= product.productImage %>" alt="<%= product.pid %>" width="30px"> </td>
+                                                        <td><img src="<%= product.productImage %>" alt="<%= product.pid %>" width="50px" height="50px"> </td>
                                                         <td><%= product.name %> </td>
                                                         <td><%= product.category %> </td>
                                                         <td><%= product.description %> </td>
@@ -609,7 +609,7 @@
                                                         <td><%= product.price %> </td>
                                                         <td>
                                                             <div style="display: flex;">
-                                                                <span  style="padding: 1rem;"><a href="#"><i class="fas fa-check-square"></i></a></span>
+                                                                <!-- <span  style="padding: 1rem;"><a href="#"><i class="fas fa-check-square"></i></a></span> -->
 															    <span style="padding: 1rem;"><a href="#"><i class="fas fa-trash-alt"></i></a></span>
                                                             </div>
                                                         </td>

@@ -127,97 +127,39 @@
           </div>
         </div>
       </div>
-
+      <%- include("../partials/messages") %>
       <div class="row">
 
-        <!-- Single Product Area -->
-        <div class="col-12 col-sm-6 col-lg-3">
+        <%products.forEach(product => { %>
+             <!-- Single Product Area -->
+        <div class="col-sm-6 col-lg-3">
           <div class="single-product-area mb-50">
             <!-- Product Thumbnail -->
-            <div class="product-thumbnail">
-              <img src="/img/bg-img/p1.jpg" alt="">
+            <div class="product-thumbnail" style="box-shadow: 2px 2px 2px rgba(148, 147, 147, 0.5);">
+              <img src="<%= product.productImage %> " alt="">
               <!-- Product Tags -->
-              <span class="product-tags">Hot</span>
+              <%if (product.product_status && product.product_status === "sold out") { %>
+                <span class="product-tags bg-danger"><%= product.product_status %> </span>
+              <% } else if(product.product_status && product.product_status === "Deal") { %> 
+                <span class="product-tags bg-success"><%= product.product_status %> </span>
+              <% } else if(product.product_status && product.product_status === "In stock") { %>
+              <span class="product-tags bg-info"><%= product.product_status %> </span>
+              <% } %> 
               <!-- Product Meta Data -->
               <div class="product-meta-data">
                 <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
+                <a href="/cart/add_to_cart/<%= product._id %>" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
+                <!-- <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a> -->
               </div>
             </div>
             <!-- Product Description -->
             <div class="product-desc text-center pt-4">
-              <a href="#" class="product-title">Strawberry</a>
-              <h6 class="price">$17.99</h6>
+              <a href="#" class="product-title"><%= product.name %> </a>
+              <h6 class="price">&#8358;<%= product.price %> </h6>
             </div>
           </div>
         </div>
-
-        <!-- Single Product Area -->
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="single-product-area mb-50">
-            <!-- Product Thumbnail -->
-            <div class="product-thumbnail">
-              <img src="/img/bg-img/p2.jpg" alt="">
-              <!-- Product Meta Data -->
-              <div class="product-meta-data">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-              </div>
-            </div>
-            <!-- Product Description -->
-            <div class="product-desc text-center pt-4">
-              <a href="#" class="product-title">Baked Breads</a>
-              <h6 class="price">$9.99</h6>
-            </div>
-          </div>
-        </div>
-
-        <!-- Single Product Area -->
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="single-product-area mb-50">
-            <!-- Product Thumbnail -->
-            <div class="product-thumbnail">
-              <img src="/img/bg-img/p3.jpg" alt="">
-              <!-- Product Meta Data -->
-              <div class="product-meta-data">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-              </div>
-            </div>
-            <!-- Product Description -->
-            <div class="product-desc text-center pt-4">
-              <a href="#" class="product-title">Prime Beef</a>
-              <h6 class="price">$59.99</h6>
-            </div>
-          </div>
-        </div>
-
-        <!-- Single Product Area -->
-        <div class="col-12 col-sm-6 col-lg-3">
-          <div class="single-product-area mb-50">
-            <!-- Product Thumbnail -->
-            <div class="product-thumbnail">
-              <img src="/img/bg-img/p4.jpg" alt="">
-              <!-- Product Tags -->
-              <span class="product-tags bg-danger">Sale</span>
-              <!-- Product Meta Data -->
-              <div class="product-meta-data">
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-              </div>
-            </div>
-            <!-- Product Description -->
-            <div class="product-desc text-center pt-4">
-              <a href="#" class="product-title">Pure Honey</a>
-              <h6 class="price"><span>$29.99</span> $19.99</h6>
-            </div>
-          </div>
-        </div>
-
+        <% }) %> 
       </div>
 
       <div class="row">

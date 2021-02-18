@@ -98,6 +98,8 @@ const adminRoutes = require("./routes/adminRoutes/admin.routes");
 const farmersRoutes = require("./routes/farmersRoutes/farmer.routes");
 // USERS ROUTES
 const userRoutes = require("./routes/usersRoutes/users.routes");
+// CART ROUTES
+const cartRoutes = require("./routes/cartRoutes/cart.routes")
 
 
 
@@ -108,12 +110,13 @@ app.use("/vendor", vendorRoutes);
 app.use("/admin", adminRoutes);
 app.use("/farmer", farmersRoutes);
 app.use("/user", userRoutes);
+app.use("/cart", cartRoutes	)
 
 // Error Handling 
 app.use(async(req, res, next) => {
 	res.send(`Sorry the page you are looking for cannot be found 
 		or broken URL
-		if you are not redirected to home click <a href="/">here</a>
+		if you are not redirected to home click $<a href="/">here</a>
 	`)
 	console.log(req.originalUrl);
 	// res.redirect("/")

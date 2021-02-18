@@ -10,9 +10,10 @@ module.exports = {
         const pageTitle = "About";
         res.render("defaultViews/about", {pageTitle});
     },
-    our_products: (req, res) => {
+    our_products: async(req, res) => {
         const pageTitle = "Our Products";
-        res.render("defaultViews/our-products", {pageTitle});
+        const products = await Product.find({approved:true})
+        res.render("defaultViews/our-products", {pageTitle, products});
     },
     farming_practice: (req, res) => {
         const pageTitle = "Farming Practice";

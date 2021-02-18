@@ -1,0 +1,74 @@
+<%- include("../partials/defaultHeader") %> 
+<%- include("../partials/defaultNavNar") %> 
+<%- include("../partials/defaultBreadcrumbs") %>
+
+<style>
+  img.prod_img{
+    width: 100px;
+  }
+  table.align_middle td{
+    vertical-align: middle !important;
+  }
+</style>
+
+
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-8 mt-2">
+    <%- include("../partials/messages") %>
+    <%if (typeof cart !== "undefined") { %>
+      <table class="table table-striped align_middle">
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th></th>
+          <th>Subtotal</th>
+        </tr>
+        <% let total = 0; %> 
+        <%cart.forEach(product => { %>
+          <% let sub = parseFloat(product.sold * product.price).toFixed(2) %>
+          <% total += +sub %> 
+          <tr>
+            <td><img class="prod_img" src="<%= product.productImage %>" alt="product_img" width="30px"></td>
+            <td><%= product.name %> </td>
+            <td><%= product.price %> </td>
+            <td><%= product.sold %> </td>
+            <td>
+              <a href="/cart/update/<%= product.id %>?action=add" class="m-2">+</a>&nbsp;
+              <a href="/cart/update/<%= product.id %>?action=remove">-</a>&nbsp;
+              <a href="/cart/update/<%= product.id %>?action=clear" class="m-2">Clear</a>&nbsp;
+            </td>
+            <td><%= sub %> </td>
+        </tr>
+        <% }) %> 
+        <tr>
+          <td colspan="6" align="right"><b>Total:</b>
+            <%= parseFloat(total).toFixed(2) %> 
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right">
+            <a href="/cart/clear_cart" class="clear-cart btn btn-danger">Clear cart</a>
+          </td>
+          <td colspan="5" align="right">
+            <a href="#" class="buy-now btn btn-primary">Proceed to checkout</a>
+          </td>
+        </tr>
+      </table>
+      
+    <% } else { %> 
+      <h3 class="text-center">Your Cart is Empty</h3>
+    <% } %> 
+  </div>
+  
+  <div class="col-lg-1"></div>
+</div>
+
+
+
+
+
+
+<%- include("../partials/defaultFooter") %> 

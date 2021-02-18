@@ -4,7 +4,7 @@ const cloudinary = require("../../config/cloudinary");
 
 module.exports = {
     product_post: async(req, res) => {
-        const { name, category, promo, description, price } = req.body;
+        const { name, category, promo, description, price, product_status } = req.body;
         const productImage = req.file;
         let errors = [];
 
@@ -31,6 +31,7 @@ module.exports = {
                             promo,
                             description,
                             price,
+                            product_status,
                             productImage: await result.secure_url,
                         });
                         await newProduct.save();
